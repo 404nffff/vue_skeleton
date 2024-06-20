@@ -1,0 +1,61 @@
+[
+    {
+      "path": "/",
+      "component": "MainLayout",
+      "children": [
+        {
+          "path": "",
+          "redirect": "dashboard"
+        },
+        {
+          "path": "dashboard",
+          "name": "dashboard",
+          "component": "Dashboard",
+          "meta": { "title": "Dashboard", "icon": "chart-bar" }
+        },
+        {
+          "path": "subpage1",
+          "name": "subpage1",
+          "component": "SubPage1",
+          "meta": { "title": "SubPage 1", "parent": "dashboard" }
+        },
+        {
+          "path": "subpage2",
+          "name": "subpage2",
+          "component": "SubPage2",
+          "meta": { "title": "SubPage 2", "parent": "dashboard" }
+        },
+        {
+          "path": "page1",
+          "name": "page1",
+          "component": "Page1",
+          "meta": { "title": "Page 1", "icon": "user" }
+        },
+        {
+          "path": "page2",
+          "name": "page2",
+          "component": "Page2",
+          "meta": { "title": "Page 2", "icon": "cogs" }
+        },
+        {
+          "path": "test",
+          "name": "test",
+          "component": "Test",
+          "meta": { "title": "Test", "icon": "user" }
+        },
+        {
+          "path": "protected",
+          "name": "protected",
+          "component": "Protected",
+          "meta": { "title": "Protected", "icon": "user" }
+        }
+      ]
+    },
+    {
+      "path": "/login",
+      "name": "login",
+      "component": "Login",
+      "meta": { "title": "Login", "public": true}
+    }
+  ]
+  
