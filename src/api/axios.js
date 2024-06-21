@@ -55,6 +55,8 @@ axiosInstance.interceptors.request.use(
     const url = config.url.startsWith('/') ? config.url : `/${config.url}`;
 
     console.log('Checking permission for:', url);
+
+    console.log(userPermissions);
     // 排除对 /api/permissions、/api/routes 请求的权限检查
     if (
       url !== '/api/permissions' && 
