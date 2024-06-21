@@ -4,6 +4,7 @@
       <div class="main-layout">
         <LeftSidebar />
         <div class="content p-4">
+          <Breadcrumbs />
           <router-view></router-view>
         </div>
       </div>
@@ -13,11 +14,13 @@
   <script>
   import Header from './Header.vue';
   import LeftSidebar from './LeftSidebar.vue';
+  import Breadcrumbs from '@/components/Breadcrumbs.vue';
   
   export default {
     components: {
       Header,
-      LeftSidebar
+      LeftSidebar,
+      Breadcrumbs
     }
   };
   </script>

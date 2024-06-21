@@ -1,44 +1,55 @@
 <template>
   <aside class="left-sidebar bg-base-200 p-4 min-h-screen">
     <ul class="menu p-4 w-64 bg-base-100 text-base-content rounded-lg shadow-md">
-      <li v-for="route in menuRoutes" :key="route.path">
-        <div v-if="!route.meta.parent" class="menu-item-container" @click="toggleMenu(route)">
-          <div class="flex items-center">
-            <font-awesome-icon :icon="route.meta.icon" class="mr-2" />
-            <router-link 
-              :to="{ name: route.name }"
-              class="menu-item"
-              active-class="active-link"
-              exact-active-class="exact-active-link"
-            >
+      <div v-for="route in filteredRoutes" :key="route.path">
+        <li v-if="hasChildren(route)">
+          <details :open="isMenuOpen(route)">
+            <summary :class="{ active: isActiveRoute(route) }">
+              <font-awesome-icon :icon="route.meta.icon" />
               {{ route.meta.title }}
-            </router-link>
-          </div>
-          <font-awesome-icon v-if="hasChildren(route)" 
-            :icon="isMenuOpen(route) ? 'angle-down' : 'angle-right'" 
-            class="ml-auto"
-          />
-        </div>
-        <ul v-if="hasChildren(route) && isMenuOpen(route)" class="ml-4">
-          <li v-for="child in getChildren(route)" :key="child.path">
-            <router-link 
-              :to="{ name: child.name }"
-              class="menu-item"
-              active-class="active-link"
-              exact-active-class="exact-active-link"
-            >
-              {{ child.meta.title }}
-            </router-link>
-          </li>
-        </ul>
-      </li>
+            </summary>
+            <ul class="menu-dropdown">
+              <li v-for="child in getChildren(route)" :key="child.path">
+                <router-link 
+                  :to="{ name: child.name }"
+                  class="menu-item"
+                  :class="{ active: isActiveRoute(child) }"
+                >
+                  {{ child.meta.title }}
+                </router-link>
+                <ul v-if="hasChildren(child) && isMenuOpen(child)" class="menu-dropdown pl-4">
+                  <li v-for="subchild in getChildren(child)" :key="subchild.path">
+                    <router-link 
+                      :to="{ name: subchild.name }"
+                      class="menu-item"
+                      :class="{ active: isActiveRoute(subchild) }"
+                    >
+                      {{ subchild.meta.title }}
+                    </router-link>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li v-else-if="!route.meta.parent">
+          <router-link 
+            :to="{ name: route.name }"
+            class="menu-item flex items-center"
+            :class="{ active: isActiveRoute(route) }"
+          >
+            <font-awesome-icon :icon="route.meta.icon" class="mr-2" />
+            {{ route.meta.title }}
+          </router-link>
+        </li>
+      </div>
     </ul>
   </aside>
 </template>
 
 <script>
-import { computed, reactive } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, reactive, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
@@ -48,22 +59,23 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const route = useRoute();
     const state = reactive({
       openMenus: []
     });
 
-    const menuRoutes = computed(() => {
-      return router.options.routes
-        .find(r => r.path === '/')
-        .children.filter(r => r.meta && r.meta.title);
+    const allRoutes = router.options.routes.find(r => r.path === '/').children;
+
+    const filteredRoutes = computed(() => {
+      return allRoutes.filter(r => !r.meta || r.meta.display !== 'none');
     });
 
     const hasChildren = (route) => {
-      return menuRoutes.value.some(r => r.meta.parent === route.name);
+      return filteredRoutes.value.some(r => r.meta.parent === route.name && (!r.meta.display || r.meta.display !== 'none'));
     };
 
     const getChildren = (route) => {
-      return menuRoutes.value.filter(r => r.meta.parent === route.name);
+      return filteredRoutes.value.filter(r => r.meta.parent === route.name && (!r.meta.display || r.meta.display !== 'none'));
     };
 
     const toggleMenu = (route) => {
@@ -79,7 +91,44 @@ export default {
       return state.openMenus.includes(route.name);
     };
 
-    return { menuRoutes, toggleMenu, isMenuOpen, hasChildren, getChildren };
+    const initializeMenuState = () => {
+      const currentRoute = router.currentRoute.value;
+      const openParentMenus = (route) => {
+        if (route.meta && route.meta.parent) {
+          const parentRoute = allRoutes.find(r => r.name === route.meta.parent);
+          if (parentRoute) {
+            if (!state.openMenus.includes(parentRoute.name)) {
+              state.openMenus.push(parentRoute.name);
+            }
+            openParentMenus(parentRoute);
+          }
+        }
+      };
+      openParentMenus(currentRoute);
+    };
+
+    const isActiveRoute = (route) => {
+      const currentRoute = router.currentRoute.value;
+      if (currentRoute.name === route.name) {
+        return true;
+      }
+
+      // Check if any ancestor of the current route matches the route
+      let parentRoute = currentRoute;
+      while (parentRoute) {
+        if (parentRoute.name === route.name) {
+          return true;
+        }
+        parentRoute = allRoutes.find(r => r.name === parentRoute.meta?.parent);
+      }
+      return false;
+    };
+
+    onMounted(() => {
+      initializeMenuState();
+    });
+
+    return { filteredRoutes, toggleMenu, isMenuOpen, hasChildren, getChildren, isActiveRoute };
   }
 };
 </script>
@@ -99,15 +148,22 @@ export default {
   padding: 0.75rem 1rem; /* p-3 */
   border-radius: 0.375rem; /* rounded */
   transition: background-color 0.2s, color 0.2s;
+  margin-bottom: 0.5rem;
 }
-.menu-item:hover {
-  background-color: #2563eb; /* hover:bg-blue-600 */
-  color: #ffffff;
+
+.menu-dropdown {
+  list-style-type: none;
+  padding-left: 1rem;
 }
-.active-link,
-.exact-active-link,
-.menu-item.router-link-active {
-  background-color: #2563eb; /* active:bg-blue-600 */
-  color: #ffffff;
+.menu-dropdown-show {
+  display: block;
+}
+
+summary {
+  cursor: pointer;
+  list-style-type: none;
+  padding: 0.75rem 1rem; /* p-3 */
+  border-radius: 0.375rem; /* rounded */
+  transition: background-color 0.2s, color 0.2s;
 }
 </style>

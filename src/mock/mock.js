@@ -42,5 +42,14 @@ export const setupMock = () => {
         return [401, { message: 'Unauthorized' }];
       }
     });
+
+    // 模拟 GET /api/permissions 请求
+    mock.onGet('/api/permissions').reply(200, {
+      "permissions": [
+        "/api/routes",
+        "/api/login",
+        "/api/protected"
+      ]
+    });
   }
 };

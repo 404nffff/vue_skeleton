@@ -40,7 +40,6 @@ const initRouter = async () => {
     }
   });
 
-  console.log(router.getRoutes()); // 打印路由配置
   return router;
 };
 
