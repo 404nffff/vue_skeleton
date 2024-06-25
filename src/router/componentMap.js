@@ -8,6 +8,8 @@ import SubPage3 from '../views/SubPage3.vue';
 import Login from '../views/Login.vue';
 import Test from '../views/Test.vue'; // 导入测试页面
 import Protected from '../views/Protected.vue'; // 导入测试页面
+import Table from '../views/Table.vue'; // 导入测试页面
+import FormPage from '../views/FormPage.vue'; // 导入测试页面
 
 const componentMap = {
   MainLayout,
@@ -19,7 +21,9 @@ const componentMap = {
   Login,
   Test,
   Protected,
-  SubPage3
+  SubPage3,
+  Table,
+  FormPage
 };
 
 export default componentMap;

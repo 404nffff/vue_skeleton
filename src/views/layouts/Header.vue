@@ -1,6 +1,6 @@
 <template>
   <header class="header bg-base-200">
-    <nav class="navbar bg-base-200 p-4 shadow-md rounded-lg flex justify-between items-center text-white">
+    <nav class="navbar bg-base-200 p-3 shadow-md rounded-lg flex justify-between items-center text-white">
       <div class="flex items-center space-x-4">
         <a class="btn btn-ghost normal-case text-xl text-white" @click="$router.push('/')">Admin Dashboard</a>
       </div>
@@ -56,6 +56,7 @@ export default {
 <style scoped>
 .header {
   padding: 1rem; /* p-4 */
+  background: #f4f5fa;
 }
 .navbar {
   display: flex;

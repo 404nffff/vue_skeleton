@@ -1,0 +1,7 @@
+{
+    "permissions": [
+      "/api/routes",
+      "/api/login",
+      "/api/protected"
+    ]
+}

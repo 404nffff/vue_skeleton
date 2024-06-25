@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { showToast } from '../utils/toast';
-import { getUserPermissions, clearUserPermissions } from './permissions';
+import { clearUserPermissions } from './permissions';
+import router from '../router'; // 导入路由实例
 
 // 创建 Axios 实例
 const axiosInstance = axios.create({
@@ -8,17 +9,10 @@ const axiosInstance = axios.create({
   timeout: 10000,
 });
 
-// 缓存用户权限
-let userPermissions = [];
+// 从环境变量中读取权限配置
+const PERMISSIONS = import.meta.env.VITE_IGNORE_PERMISSIONS.split(',') || [];
 
-// 获取用户权限并缓存
-const fetchUserPermissions = async () => {
-  try {
-    userPermissions = await getUserPermissions();
-  } catch (error) {
-    console.error('Failed to fetch user permissions:', error);
-  }
-};
+console.log('PERMISSIONS:', PERMISSIONS);
 
 // 统一处理错误响应
 const handleErrorResponse = (error) => {
@@ -35,7 +29,7 @@ const handleErrorResponse = (error) => {
     // 如果错误码是 401（未授权），抛出特定错误
     if (error.response.status === 401) {
       clearUserPermissions(); // 清除权限缓存
-      error.message = 'Unauthorized';
+      router.push('/login'); // 跳转到登录页面
     }
   } else if (error.request) {
     // 请求已发出但没有收到响应
@@ -53,14 +47,10 @@ const handleErrorResponse = (error) => {
 axiosInstance.interceptors.request.use(
   (config) => {
     const url = config.url.startsWith('/') ? config.url : `/${config.url}`;
-
-    console.log('Checking permission for:', url);
-
-    console.log(userPermissions);
-    // 排除对 /api/permissions、/api/routes 请求的权限检查
+    const userPermissions = JSON.parse(sessionStorage.getItem('user_permissions')) || [];
+    // 排除对 /api/permissions 请求的权限检查
     if (
-      url !== '/api/permissions' && 
-      url != '/api/routes' &&
+      !PERMISSIONS.includes(url) &&
       !userPermissions.includes(url)) {
       return Promise.reject(new Error('Permission denied'));
     }
@@ -94,6 +84,3 @@ export const post = (url, data = {}) => {
 };
 
 export default axiosInstance;
-
-// 初始化时获取用户权限
-fetchUserPermissions();

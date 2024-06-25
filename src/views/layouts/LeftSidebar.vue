@@ -1,11 +1,11 @@
 <template>
-  <aside class="left-sidebar bg-base-200 p-4 min-h-screen">
+  <aside class="left-sidebar bg-base-200 p-3 min-h-screen">
     <ul class="menu p-4 w-64 bg-base-100 text-base-content rounded-lg shadow-md">
       <div v-for="route in filteredRoutes" :key="route.path">
         <li v-if="hasChildren(route)">
           <details :open="isMenuOpen(route)">
             <summary :class="{ active: isActiveRoute(route) }">
-              <font-awesome-icon :icon="route.meta.icon" />
+              <i class="mr-2 fas " :class="'fa-'+route.meta.icon"></i>
               {{ route.meta.title }}
             </summary>
             <ul class="menu-dropdown">
@@ -38,7 +38,7 @@
             class="menu-item flex items-center"
             :class="{ active: isActiveRoute(route) }"
           >
-            <font-awesome-icon :icon="route.meta.icon" class="mr-2" />
+            <i class="mr-2 fas " :class="'fa-'+route.meta.icon"></i>
             {{ route.meta.title }}
           </router-link>
         </li>
@@ -50,12 +50,9 @@
 <script>
 import { computed, reactive, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
 export default {
   name: 'LeftSidebar',
   components: {
-    FontAwesomeIcon
   },
   setup() {
     const router = useRouter();
@@ -136,6 +133,7 @@ export default {
 <style scoped>
 .left-sidebar {
   height: 100vh;
+  background: #f4f5fa;
 }
 .menu-item-container {
   display: flex;

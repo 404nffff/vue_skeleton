@@ -22,3 +22,41 @@ npm run dev
 7. daisyui + tailwindcss
 8. chart.js
 9. js-cookie
+10. VeeValidate
+
+
+## 部署插件
+1. 打包体积分析插件
+```
+npm i rollup-plugin-visualizer -D
+
+# vite.config.js
+
+
+import { visualizer } from 'rollup-plugin-visualizer'
+
+export default defineConfig({
+  plugins: [
+    visualizer({
+      open: true,
+      gzipSize: true,
+      brotliSize: true
+    })
+  ]
+})
+
+```
+2. 去除debugger
+```
+npm i terser -D
+
+terserOptions: {
+  compress: {
+    drop_console: true,
+    drop_debugger: true
+  }
+}
+
+```
+
+

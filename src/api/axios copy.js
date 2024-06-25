@@ -1,10 +1,7 @@
   import axios from 'axios';
   import { showToast } from '../utils/toast';
   import { useRouter } from 'vue-router';
-
-  import { getUserPermissions } from './permissions';
-
-
+  
   const router = useRouter();
 
 

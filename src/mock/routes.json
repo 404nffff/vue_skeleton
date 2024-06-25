@@ -56,6 +56,18 @@
           "name": "protected",
           "component": "Protected",
           "meta": { "title": "Protected", "icon": "user" }
+        },
+        {
+          "path": "table",
+          "name": "table",
+          "component": "Table",
+          "meta": { "title": "表格", "icon": "user" }
+        },
+        {
+          "path": "form",
+          "name": "form",
+          "component": "FormPage",
+          "meta": { "title": "表单", "icon": "user"}
         }
       ]
     },

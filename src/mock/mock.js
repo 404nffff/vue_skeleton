@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import axiosInstance from '../api/axios';
 import routes from './routes.json';
+import permissions from './permission.json';
 import Cookies from 'js-cookie';
 
 export const setupMock = () => {
@@ -44,12 +45,7 @@ export const setupMock = () => {
     });
 
     // 模拟 GET /api/permissions 请求
-    mock.onGet('/api/permissions').reply(200, {
-      "permissions": [
-        "/api/routes",
-        "/api/login",
-        "/api/protected"
-      ]
-    });
+    mock.onGet('/api/permissions').reply(200, permissions);
+
   }
 };
