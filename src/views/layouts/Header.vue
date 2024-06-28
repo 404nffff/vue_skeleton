@@ -6,12 +6,11 @@
       </div>
       <div class="relative flex items-center space-x-4">
         
-        <img
-          src="https://via.placeholder.com/40"
-          alt="Avatar"
-          class="avatar w-10 h-10 rounded-full cursor-pointer"
-          @click="toggleMenu"
-        />
+        <div class="avatar" @click="toggleMenu">
+          <div class="w-24 rounded-full">
+            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+          </div>
+        </div>
         <span @click="toggleMenu">{{ username }}</span>
         <div v-if="menuOpen" class="menu absolute mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
           <ul>
@@ -55,7 +54,7 @@ export default {
 
 <style scoped>
 .header {
-  padding: 1rem; /* p-4 */
+  padding: 0.5rem; /* p-4 */
   background: #f4f5fa;
 }
 .navbar {

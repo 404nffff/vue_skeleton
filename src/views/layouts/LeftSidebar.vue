@@ -1,5 +1,5 @@
 <template>
-  <aside class="left-sidebar bg-base-200 p-3 min-h-screen">
+  <aside class="left-sidebar mr-2 min-h-screen">
     <ul class="menu p-4 w-64 bg-base-100 text-base-content rounded-lg shadow-md">
       <div v-for="route in filteredRoutes" :key="route.path">
         <li v-if="hasChildren(route)">
@@ -133,7 +133,6 @@ export default {
 <style scoped>
 .left-sidebar {
   height: 100vh;
-  background: #f4f5fa;
 }
 .menu-item-container {
   display: flex;

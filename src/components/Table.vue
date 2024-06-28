@@ -1,11 +1,11 @@
 <template>
-  <div class="overflow-auto max-h-96" style="height: 500px;">
+  <div class="overflow-auto min-h-96">
     <!-- 表格标题 -->
     <div class="mb-4 text-lg font-bold">
       {{ title }}
     </div>
     <!-- 表格主体 -->
-    <table class="table-auto w-full bg-white shadow-md rounded-lg border border-gray-300">
+    <table class="table-auto w-full bg-white  rounded-lg border border-gray-300">
       <thead class="bg-gray-100 sticky top-0">
         <tr>
           <!-- 表头 -->
@@ -35,30 +35,30 @@
         </tr>
       </tbody>
     </table>
+  </div>
     <!-- 分页组件 -->
     <div class="flex justify-between items-center mt-4">
-      <div class="join">
-        <button @click="previousPage" :disabled="currentPage === 1" class="join-item btn">
-          «
-        </button>
-        <button v-if="shouldShowButton(1)" @click="goToPage(1)" :class="['join-item btn', { 'btn-active': currentPage === 1 }]">
-          1
-        </button>
-        <span v-if="shouldShowEllipsis(1)" class="join-item btn btn-disabled">...</span>
-        <button v-for="page in pagesToShow" :key="page" @click="goToPage(page)" :class="['join-item btn', { 'btn-active': currentPage === page }]">
-          {{ page }}
-        </button>
-        <span v-if="shouldShowEllipsis(totalPages)" class="join-item btn btn-disabled">...</span>
-        <button v-if="shouldShowButton(totalPages)" @click="goToPage(totalPages)" :class="['join-item btn', { 'btn-active': currentPage === totalPages }]">
-          {{ totalPages }}
-        </button>
-        <button @click="nextPage" :disabled="currentPage === totalPages" class="join-item btn">
-          »
-        </button>
-      </div>
-      <div class="ml-4 text-sm text-gray-700">
-        Total pages: <span class="font-bold">{{ totalPages }}</span>
-      </div>
+    <div class="join">
+      <button @click="previousPage" :disabled="currentPage === 1" class="join-item btn">
+        «
+      </button>
+      <button v-if="shouldShowButton(1)" @click="goToPage(1)" :class="['join-item btn', { 'btn-active': currentPage === 1 }]">
+        1
+      </button>
+      <span v-if="shouldShowEllipsis(1)" class="join-item btn btn-disabled">...</span>
+      <button v-for="page in pagesToShow" :key="page" @click="goToPage(page)" :class="['join-item btn', { 'btn-active': currentPage === page }]">
+        {{ page }}
+      </button>
+      <span v-if="shouldShowEllipsis(totalPages)" class="join-item btn btn-disabled">...</span>
+      <button v-if="shouldShowButton(totalPages)" @click="goToPage(totalPages)" :class="['join-item btn', { 'btn-active': currentPage === totalPages }]">
+        {{ totalPages }}
+      </button>
+      <button @click="nextPage" :disabled="currentPage === totalPages" class="join-item btn">
+        »
+      </button>
+    </div>
+    <div class="ml-4 text-sm text-gray-700">
+      Total pages: <span class="font-bold">{{ totalPages }}</span>
     </div>
   </div>
 </template>
@@ -186,7 +186,7 @@ export default {
   cursor: pointer;
 }
 .table {
-  max-height: 300px; /* 设定表格的最大高度 */
+  max-height: 500px; /* 设定表格的最大高度 */
   overflow-y: auto; /* 超过高度时滚动 */
 }
 .hover\:bg-gray-100:hover {

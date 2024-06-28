@@ -4,8 +4,6 @@ import store from './store';
 import './assets/index.css'; // 引入 Tailwind CSS
 import initRouter from './router'; // 确保在导入 router 之前调用 initRouter
 
-import 'daisyui/dist/full.css'; // 引入 DaisyUI 样式
-
 import $ from 'jquery'; // 导入 jQuery
 
 // 初始化 Mock Adapter

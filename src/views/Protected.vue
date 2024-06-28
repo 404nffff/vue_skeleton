@@ -50,4 +50,4 @@
     background-color: #f3f4f6; /* bg-gray-100 */
   }
   </style>
-  
+    

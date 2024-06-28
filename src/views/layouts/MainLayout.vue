@@ -1,11 +1,12 @@
 <template>
   <div class="layout">
     <Header />
-    <div class="main-layout">
+    <div class="main-layout ml-2 mt-2">
       <LeftSidebar />
-      <div class="content p-4">
-        <Breadcrumbs />
-        <router-view></router-view>
+      <div class="content w-4/5 mb-2">
+        <Breadcrumbs class="mb-2"/>
+          
+        <router-view class="bg-white shadow-lg rounded-lg"></router-view>
       </div>
     </div>
   </div>
@@ -15,7 +16,6 @@
 import Header from './Header.vue';
 import LeftSidebar from './LeftSidebar.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
-import { fetchRoutes } from '@/api/routes'; // 导入路由获取函数
 import { getUserPermissions } from '@/api/permissions'; // 导入权限获取函数
 
 export default {
@@ -40,15 +40,14 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: #fff;
+  background: #f4f5fa;
 }
 
 .main-layout {
   display: flex;
-  flex: 1;
 }
 
 .content {
-  flex: 1;
+  /* width: 80%; */
 }
 </style>

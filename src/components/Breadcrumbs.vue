@@ -1,23 +1,26 @@
 <template>
-  <div class="text-sm breadcrumbs p-4 bg-base-200 rounded-lg mb-4">
-    <ul>
-      <li v-for="(crumb, index) in breadcrumbs" :key="index">
-        <template v-if="index === 0">
-          <span>{{ crumb.meta.title }}</span>
-        </template>
-        <template v-else-if="index === breadcrumbs.length - 1">
-          <span>{{ crumb.meta.title }}</span>
-        </template>
-        <template v-else>
-          
-          <router-link v-if="crumb.meta.parent" :to="{ name: crumb.name }">
-            {{ crumb.meta.title }}
-          </router-link>
-          <span v-else>{{ crumb.meta.title }}</span>
-        </template>
-      </li>
-    </ul>
+  <div class="bg-white p-2">
+    <div class="text-sm breadcrumbs p-2  rounded-lg">
+      <ul>
+        <li v-for="(crumb, index) in breadcrumbs" :key="index">
+          <template v-if="index === 0">
+            <span>{{ crumb.meta.title }}</span>
+          </template>
+          <template v-else-if="index === breadcrumbs.length - 1">
+            <span>{{ crumb.meta.title }}</span>
+          </template>
+          <template v-else>
+            
+            <router-link v-if="crumb.meta.parent" :to="{ name: crumb.name }">
+              {{ crumb.meta.title }}
+            </router-link>
+            <span v-else>{{ crumb.meta.title }}</span>
+          </template>
+        </li>
+      </ul>
+    </div>
   </div>
+  
 </template>
 
 <script>
@@ -71,7 +74,6 @@ export default {
 
 <style scoped>
 .breadcrumbs {
-  background-color: #f3f4f6; /* bg-gray-100 */
 }
 .breadcrumbs ul {
   list-style: none;
