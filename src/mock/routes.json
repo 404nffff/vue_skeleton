@@ -68,6 +68,12 @@
           "name": "form",
           "component": "FormPage",
           "meta": { "title": "表单", "icon": "user"}
+        },
+        {
+          "path": "ParentComponent",
+          "name": "ParentComponent",
+          "component": "ParentComponent",
+          "meta": { "title": "ParentComponent", "icon": "user"}
         }
       ]
     },

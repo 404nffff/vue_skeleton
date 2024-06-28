@@ -58,6 +58,7 @@
               <VField v-model="formData[field.name]" :name="field.name" :rules="field.rules">
                 <template #default="{ field, meta }">
                   <UploadImage
+                    ref="uploadRef"
                     v-bind="field"
                     :maxFileSize="field.maxFileSize"
                     :maxFiles="field.maxFiles"
@@ -77,12 +78,14 @@
       <div class="flex justify-end space-x-4">
         <button type="submit" class="btn btn-primary">提交</button>
         <button type="button" @click="handleCancel" class="btn">取消</button>
+        <button type="button" @click="callChildMethod" class="btn">调用子组件方法</button>
       </div>
     </VForm>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue';
 import { Field as VField, Form as VForm, ErrorMessage } from 'vee-validate';
 import { setupVeeValidate } from '@/utils/vee-validate';
 import UploadImage from './UploadImage.vue'; // 导入 UploadImage 组件
@@ -100,7 +103,7 @@ export default {
   props: {
     formTitle: {
       type: String,
-      default: 'Form',
+      default: 'Form',  
     },
     formFields: {
       type: Array,
@@ -111,6 +114,21 @@ export default {
       default: () => ({}),
     },
   },
+  setup() {
+    const uploadRef = ref(null);
+
+    const callChildMethod = () => {
+        if (uploadRef.value) {
+          uploadRef.value.test2();
+        }
+    };
+
+
+    return {
+      uploadRef,
+      callChildMethod
+    };
+  },
   methods: {
     handleSubmit(values) {
       console.log('Form submitted:', values);
@@ -120,7 +138,7 @@ export default {
     },
     updateFormData(name, value) {
       this.formData[name] = value;
-    },
+    }
   },
 };
 </script>
