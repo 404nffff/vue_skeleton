@@ -23,6 +23,7 @@ npm run dev
 8. chart.js
 9. js-cookie
 10. VeeValidate
+11. ckeditor5
 
 
 ## 部署插件

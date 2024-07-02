@@ -1,64 +1,75 @@
 <template>
   <div class="overflow-auto min-h-96">
-    <!-- 表格标题 -->
-    <div class="mb-4 text-lg font-bold">
-      {{ title }}
+    <!-- 表格标题和操作 -->
+    <div class="mb-4 font-bold flex justify-between items-center">
+      <div>{{ title }}</div>
+      <div>
+        <slot name="add-button"></slot>
+      </div>
+    </div>
+    <!-- 查询筛选 -->
+    <div class="mb-10" v-if="$slots.filter">
+      <div class="mb-4 font-bold flex justify-between items-center">
+        <div>查询</div>
+      </div>
+      <slot name="filter"></slot>
     </div>
     <!-- 表格主体 -->
-    <table class="table-auto w-full bg-white  rounded-lg border border-gray-300">
-      <thead class="bg-gray-100 sticky top-0">
+    <table class="table table-auto w-full bg-white rounded-lg">
+      <thead>
         <tr>
           <!-- 表头 -->
-          <th v-for="(header, index) in headers" :key="index" @click="sortBy(header)" class="cursor-pointer px-4 py-2 text-center align-middle">
-            <div class="flex items-center justify-center space-x-2">
+          <th v-for="(header, index) in headers" :key="index" @click="sortBy(header)" class="px-4 py-2 text-center align-middle text-sm">
+            <slot v-if="$slots[`header-${header}`]" :name="`header-${header}`" :header="header">
+              <div class="flex items-center justify-center space-x-2">
+                <span>{{ header }}</span>
+              </div>
+            </slot>
+            <div v-else class="flex items-center justify-center space-x-2">
               <span>{{ header }}</span>
-              <!-- 排序图标 -->
-              <svg v-if="sortedColumn === header" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path v-if="sortDirection === 'asc'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
-                <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
             </div>
           </th>
-          <th class="px-4 py-2 text-center align-middle">Actions</th>
+          <th v-if="$slots.actions" class="px-4 py-2 text-center align-middle text-sm">操作</th>
         </tr>
       </thead>
       <tbody>
         <!-- 表格内容 -->
-        <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex" class="hover:bg-gray-100 border-b">
+        <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex" class="hover">
           <td v-for="(header, colIndex) in headers" :key="colIndex" class="px-4 py-2 text-center align-middle">
-            {{ row[header] }}
+            <slot :name="`column-${header}`" :row="row" :header="header">
+              {{ row[header] }}
+            </slot>
           </td>
-          <td class="px-4 py-2 text-center align-middle">
-            <button @click="editRow(row)" class="btn btn-sm btn-warning mr-2">Edit</button>
-            <button @click="deleteRow(rowIndex)" class="btn btn-sm btn-error">Delete</button>
+          <td v-if="$slots.actions" class="px-4 py-2 text-center align-middle">
+            <slot name="actions" :row="row" :rowIndex="rowIndex"></slot>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-    <!-- 分页组件 -->
-    <div class="flex justify-between items-center mt-4">
+  <!-- 分页组件 -->
+  <div class="flex justify-end items-center mt-10">
     <div class="join">
-      <button @click="previousPage" :disabled="currentPage === 1" class="join-item btn">
+      <button @click="previousPage" :disabled="currentPage === 1" class="join-item btn btn-sm">
         «
       </button>
-      <button v-if="shouldShowButton(1)" @click="goToPage(1)" :class="['join-item btn', { 'btn-active': currentPage === 1 }]">
+      <button v-if="shouldShowButton(1)" @click="goToPage(1)" :class="['join-item btn btn-sm', { 'btn-active': currentPage === 1 }]">
         1
       </button>
       <span v-if="shouldShowEllipsis(1)" class="join-item btn btn-disabled">...</span>
-      <button v-for="page in pagesToShow" :key="page" @click="goToPage(page)" :class="['join-item btn', { 'btn-active': currentPage === page }]">
+      <button v-for="page in pagesToShow" :key="page" @click="goToPage(page)" :class="['join-item btn btn-sm', { 'btn-active': currentPage === page }]">
         {{ page }}
       </button>
       <span v-if="shouldShowEllipsis(totalPages)" class="join-item btn btn-disabled">...</span>
-      <button v-if="shouldShowButton(totalPages)" @click="goToPage(totalPages)" :class="['join-item btn', { 'btn-active': currentPage === totalPages }]">
+      <button v-if="shouldShowButton(totalPages)" @click="goToPage(totalPages)" :class="['join-item btn btn-sm', { 'btn-active': currentPage === totalPages }]">
         {{ totalPages }}
       </button>
-      <button @click="nextPage" :disabled="currentPage === totalPages" class="join-item btn">
+      <button @click="nextPage" :disabled="currentPage === totalPages" class="join-item btn btn-sm">
         »
       </button>
     </div>
-    <div class="ml-4 text-sm text-gray-700">
-      Total pages: <span class="font-bold">{{ totalPages }}</span>
+    <div class="ml-4 text-sm text-gray-700 ml-5">
+      总数: <span class="font-bold">{{ totalPages }}</span>
     </div>
   </div>
 </template>
@@ -98,6 +109,7 @@ export default {
       sortDirection: 'asc',
     };
   },
+  emits: ["update:currentPage"],
   computed: {
     totalPages() {
       return Math.ceil(this.totalItems / this.pageSize);
@@ -168,15 +180,7 @@ export default {
         (page === 1 && this.currentPage > 4) ||
         (page === this.totalPages && this.currentPage < this.totalPages - 3)
       );
-    },
-    // 编辑行
-    editRow(row) {
-      this.$emit('editRow', row);
-    },
-    // 删除行
-    deleteRow(index) {
-      this.$emit('deleteRow', index);
-    },
+    }
   },
 };
 </script>

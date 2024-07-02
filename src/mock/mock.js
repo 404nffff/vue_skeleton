@@ -47,5 +47,19 @@ export const setupMock = () => {
     // 模拟 GET /api/permissions 请求
     mock.onGet('/api/permissions').reply(200, permissions);
 
+    // 模拟上传接口
+    mock.onPost('/api/upload').reply(config => {
+      // 解析请求体
+      const formData = config.data;
+      
+      console.log(config)
+      // 在这里可以进行模拟的逻辑处理，比如验证文件类型、大小等
+      // 这里直接返回成功的响应
+      return [200, {
+          url: 'https://pss.bdstatic.com/static/superman/img/logo/logo_white-d0c9fe2af5.png', // 模拟返回的文件URL
+          message: '文件上传成功',
+      }];
+    });
+
   }
 };

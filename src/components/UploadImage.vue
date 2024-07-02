@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { ref, watch, defineExpose } from 'vue';
+import { ref, watch } from 'vue';
 import { showToast } from '@/utils/toast';
 
 // 模拟接口调用
@@ -169,6 +169,12 @@ export default {
     const closePreview = () => {
       previewIndex.value = null;
     };
+
+    // 暴露方法
+    const test2 = () => {
+      console.log('子组件的方法被调用');
+    };
+
     return {
       selectedFiles,
       limitedPreviews,
@@ -178,13 +184,8 @@ export default {
       uploadImages,
       showPreview,
       closePreview,
+      test2, // 确保方法在组件实例中
     };
-  },
-  expose:['test2'],
-  methods:{
-    test2(){
-      console.log(123);
-    }
   }
 };
 </script>

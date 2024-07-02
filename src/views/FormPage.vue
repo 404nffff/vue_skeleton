@@ -75,6 +75,13 @@ export default {
           uploadEndpoint: '/upload', // 示例上传端点
           rules: 'required',
         },
+        {
+          name: 'ckeditor',
+          label: 'ckeditor',
+          type: 'ckeditor',
+          uploadEndpoint: '/upload', // 示例上传端点
+          rules: 'required',
+        },
       ],
     };
   },
