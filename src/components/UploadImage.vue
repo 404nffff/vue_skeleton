@@ -115,11 +115,13 @@ export default {
     const validateFiles = (files) => {
       return files.filter(file => {
         if (!file.type.startsWith('image/')) {
-          showToast('文件格式不支持', 'error');
+          //showToast('文件格式不支持', 'error');
+          this.$toast({type:'error', message:`文件格式不支持`});
           return false;
         }
         if (file.size > props.maxFileSize) {
-          showToast(`文件大小不能超过 ${props.maxFileSize / 1024 / 1024} MB`, 'error');
+          //showToast(`文件大小不能超过 ${props.maxFileSize / 1024 / 1024} MB`, 'error');
+          this.$toast({type:'error', message:`文件大小不能超过 ${props.maxFileSize / 1024 / 1024} MB`});
           return false;
         }
         return true;
@@ -147,7 +149,8 @@ export default {
         const response = await mockUploadEndpoint(formData);
         
         selectedFiles.value.forEach(file => file.status = '上传成功');
-        showToast('上传成功', 'success');
+        //showToast('上传成功', 'success');
+        this.$toast({message:`上传成功`});
         console.log('上传成功:', response.data);
           
         // 更新 modelValue
@@ -155,7 +158,8 @@ export default {
 
       } catch (error) {
         selectedFiles.value.forEach(file => file.status = '上传失败');
-        showToast('上传失败', 'error');
+        //showToast('上传失败', 'error'); 
+        this.$toast({type:'error', message:`上传失败`});
         console.error('上传失败:', error);
       }
     };

@@ -11,7 +11,9 @@
     >
       <!-- 添加按钮 -->
       <template v-slot:add-button>
-        <button @click="showAddForm" class="btn btn-primary btn-sm"><i class="fa-solid fa-add"></i>添加</button>
+        <button @click="showAddForm" class="btn btn-primary btn-sm">
+          <i class="fa fa-add"></i>添加
+        </button>
       </template>
       <!-- 查询筛选 -->
       <template v-slot:filter>
@@ -61,29 +63,25 @@
       </template>
       <!-- 自定义操作按钮 -->
       <template v-slot:actions="{ row, rowIndex }">
-        <button @click="editRow(row)" class="btn btn-sm btn-primary mr-2"><i class="fa-solid fa-pen-to-square"></i>编辑</button>
-        <button @click="confirmDeleteRow(rowIndex)" class="btn btn-sm btn-error"><i class="fa fa-trash"></i>删除</button>
+        <button @click="editRow(row)" class="btn btn-sm btn-primary mr-2">
+          <i class="fa-solid fa-pen-to-square"></i>
+          编辑
+        </button>
+        <button @click="confirmDeleteRow(rowIndex)" class="btn btn-sm btn-error">
+          <i class="fa fa-trash"></i>删除
+        </button>
       </template>
     </Table>
-
-    <!-- 删除确认弹窗 -->
-    <Dialog :visible.sync="isConfirmDialogVisible" title="确认删除" @confirm="deleteRow">
-      <div>
-        您确定要删除这条记录吗？
-      </div>
-    </Dialog>
   </div>
 </template>
 
 <script>
 import Table from '@/components/Table.vue';
-import Dialog from '@/components/Dialog.vue';
 
 export default {
   name: 'App',
   components: {
     Table,
-    Dialog,
   },
   data() {
     return {
@@ -106,8 +104,6 @@ export default {
       currentPage: 1,
       totalItems: 12, // 总条数
       searchQuery: '',
-      isConfirmDialogVisible: false,
-      deleteIndex: null,
       filters: {
         Name: '',
         Age: '',
@@ -146,21 +142,20 @@ export default {
     },
     // 确认删除操作
     confirmDeleteRow(rowIndex) {
-      this.deleteIndex = (this.currentPage - 1) * this.pageSize + rowIndex;
-      this.isConfirmDialogVisible = true;
-    },
-    // 删除行
-    deleteRow() {
-      if (this.deleteIndex !== null) {
-        this.tableData.splice(this.deleteIndex, 1);
-        this.totalItems -= 1;
-        // If the current page is now empty after deletion, move to the previous page if possible
-        if (this.paginatedData.length === 0 && this.currentPage > 1) {
-          this.currentPage -= 1;
-        }
-        this.isConfirmDialogVisible = false;
-        this.deleteIndex = null;
-      }
+      const actualIndex = (this.currentPage - 1) * this.pageSize + rowIndex;
+      this.$toast({message:'123'});
+      // this.$dialog({
+      //   title: '确认删除',
+      //   content: '您确定要删除这条记录吗？',
+      //   onConfirm: () => {
+      //     this.tableData.splice(actualIndex, 1);
+      //     this.totalItems -= 1;
+      //     // If the current page is now empty after deletion, move to the previous page if possible
+      //     if (this.paginatedData.length === 0 && this.currentPage > 1) {
+      //       this.currentPage -= 1;
+      //     }
+      //   },
+      // });
     },
     // 过滤数据
     filterData() {

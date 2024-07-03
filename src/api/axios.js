@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { showToast } from '../utils/toast';
+import { showToast } from '@/plugins/ToastPlugin'; // 确保路径正确
 import { clearUserPermissions } from './permissions';
 import router from '../router'; // 导入路由实例
 
@@ -19,11 +19,11 @@ const handleErrorResponse = (error) => {
   console.log('Error:', error.message);
   if (error.response) {
     if (error.response.data !== undefined) {
-      console.error('Response error:', error.response.data.message);
-      showToast(`Error: ${error.response.data.message || 'Request failed'}`);
+      //console.error('Response error:', error.response.data.message);
+      showToast({ type: 'error', message: `Error: ${error.response.data.message || 'Request failed'}` });
     } else {
-      console.error('Response error:', error.message);
-      showToast(`Error: ${error.message || 'Request failed'}`);
+      //console.error('Response error:', error.message);
+      showToast({ type: 'error', message: `Error: ${error.message || 'Request failed'}` });
     }
 
     // 如果错误码是 401（未授权），抛出特定错误
@@ -33,12 +33,12 @@ const handleErrorResponse = (error) => {
     }
   } else if (error.request) {
     // 请求已发出但没有收到响应
-    console.error('No response:', error.request);
-    showToast('Error: No response from server');
+    //console.error('No response:', error.request);
+    showToast({ type: 'error', message: 'Error: No response from server' });
   } else {
     // 在设置请求时触发错误
-    console.error('Request error:', error.message);
-    showToast(`Error: ${error.message}`);
+    //console.error('Request error:', error.message);
+    showToast({ type: 'error', message: `Error: ${error.message}` });
   }
   return Promise.reject(error);
 };
