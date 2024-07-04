@@ -143,19 +143,19 @@ export default {
     // 确认删除操作
     confirmDeleteRow(rowIndex) {
       const actualIndex = (this.currentPage - 1) * this.pageSize + rowIndex;
-      this.$toast({message:'123'});
-      // this.$dialog({
-      //   title: '确认删除',
-      //   content: '您确定要删除这条记录吗？',
-      //   onConfirm: () => {
-      //     this.tableData.splice(actualIndex, 1);
-      //     this.totalItems -= 1;
-      //     // If the current page is now empty after deletion, move to the previous page if possible
-      //     if (this.paginatedData.length === 0 && this.currentPage > 1) {
-      //       this.currentPage -= 1;
-      //     }
-      //   },
-      // });
+      //this.$toast({message:'123', type:'success'});
+      this.$dialog({
+        title: '确认删除',
+        content: '您确定要删除这条记录吗？',
+        onConfirm: () => {
+          this.tableData.splice(actualIndex, 1);
+          this.totalItems -= 1;
+          // If the current page is now empty after deletion, move to the previous page if possible
+          if (this.paginatedData.length === 0 && this.currentPage > 1) {
+            this.currentPage -= 1;
+          }
+        },
+      });
     },
     // 过滤数据
     filterData() {

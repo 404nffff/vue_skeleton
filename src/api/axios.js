@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { showToast } from '@/plugins/ToastPlugin'; // 确保路径正确
+//import { showToast } from '@/plugins/ToastPlugin'; // 确保路径正确
+import { showToast } from '@/utils/toast'; // 确保路径正确
 import { clearUserPermissions } from './permissions';
 import router from '../router'; // 导入路由实例
 

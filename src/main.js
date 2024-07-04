@@ -4,8 +4,8 @@ import store from './store';
 import './assets/index.css'; // 引入 Tailwind CSS
 import initRouter from './router'; // 确保在导入 router 之前调用 initRouter
 import DialogPlugin from './plugins/DialogPlugin'; // 导入 DialogPlugin
-import ToastPlugin from './plugins/ToastPlugin'; // 导入 ToastPlugin
-
+//import ToastPlugin from './plugins/ToastPlugin'; // 导入 ToastPlugin
+import ToastPlugin from './utils/toast'; // 导入 ToastPlugin
 import $ from 'jquery'; // 导入 jQuery
 
 // 初始化 Mock Adapter

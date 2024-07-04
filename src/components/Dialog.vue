@@ -1,29 +1,17 @@
 <template>
-  <div v-if="state.visible" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-    <div class="bg-white rounded-lg shadow-lg w-1/3">
-      <!-- 标题栏 -->
-      <div class="flex justify-between items-center p-4 border-b">
-        <h3 class="text-lg font-semibold">{{ state.title }}</h3>
-        <button @click="close" class="text-gray-500 hover:text-gray-700">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
-      <!-- 内容 -->
-      <div class="p-4">
-        <slot>{{ state.content }}</slot>
-      </div>
-      <!-- 底部按钮 -->
-      <div class="flex justify-end p-4 border-t">
-        <slot name="footer">
-          
-          <button @click="confirm" class="btn btn-primary  mr-2 btn-sm">确定</button>
-          <button @click="close" class="btn btn-sm">取消</button>
-        </slot>
-      </div>
+ <dialog id="my_modal_1" class="modal" :class="state.visible?'modal-open':''">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">{{ state.title }}</h3>
+    <p class="py-4">{{ state.content }}</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button @click="confirm" class="btn btn-primary mr-2">确定</button>
+        <button @click="close" class="btn">Close</button>
+      </form>
     </div>
   </div>
+</dialog>
 </template>
 
 <script>
