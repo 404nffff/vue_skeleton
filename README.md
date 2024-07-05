@@ -20,7 +20,7 @@ npm run dev
 5. vue-router
 6. jquery
 7. daisyui + tailwindcss
-8. chart.js
+8. echarts
 9. js-cookie
 10. VeeValidate
 11. ckeditor5
