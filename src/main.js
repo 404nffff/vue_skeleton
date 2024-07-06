@@ -8,10 +8,10 @@ import DialogPlugin from './plugins/DialogPlugin'; // 导入 DialogPlugin
 import ToastPlugin from './utils/toast'; // 导入 ToastPlugin
 import $ from 'jquery'; // 导入 jQuery
 
-// 初始化 Mock Adapter
-import { setupMock } from './mock/mock'; // 导入并调用 setupMock
+//初始化 Mock Adapter
+import { setupMock } from './mock/axiosMock'; // 导入并调用 setupMock
 
-// 初始化 Mock Adapter
+//初始化 Mock Adapter
 setupMock();
 
 // 初始化路由器并创建应用

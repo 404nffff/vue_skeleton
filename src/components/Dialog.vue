@@ -1,5 +1,5 @@
 <template>
- <dialog id="my_modal_1" class="modal" :class="state.visible?'modal-open':''">
+ <dialog class="modal" :class="state.visible?'modal-open':''">
   <div class="modal-box">
     <h3 class="text-lg font-bold">{{ state.title }}</h3>
     <p class="py-4">{{ state.content }}</p>

@@ -16,7 +16,7 @@ dotenv.config()
 // https://vitejs.dev/config/
 
 export default defineConfig(({ mode }) => {
-  // const useMock = mode === 'development' && process.env.VITE_USE_MOCK === 'true';
+  const useMock = mode === 'development' && process.env.MOCK_SERVER === 'true';
 
   return {
     base: '/dist/', // 确保正确设置公共路径
@@ -104,11 +104,10 @@ export default defineConfig(({ mode }) => {
       port: process.env.PORT || 3000, // 配置开发服务器的端口为 3000
       host:'0.0.0.0',
       proxy: {
-        // '/api': {
-        //   target: useMock ? 'http://localhost:3001' : 'http://your-api-server.com',
-        //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(/^\/api/, ''),
-        // },
+        '/api': {
+          target: useMock ? 'http://localhost:3000' : 'http://your-api-server.com',
+          changeOrigin: true
+        },
       },
     },
     css: {

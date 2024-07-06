@@ -52,7 +52,7 @@ export default {
         await login(this.username, this.password);
         this.$router.push('/dashboard');
       } catch (error) {
-        console.error('Login failed:', error);
+        //console.error('Login failed:', error);
       }
     }
   }

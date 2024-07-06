@@ -68,18 +68,41 @@ axiosInstance.interceptors.response.use(
 
 // 封装 GET 请求
 export const get = (url, params = {}) => {
-  return axiosInstance.get(url, { params })
-    .then(response => response.data)
-    .catch(error => {
+
+  return axiosInstance.get(url, params.data)
+    .then(response => {
+
+      //判断params.success 是否存在，存在则执行
+      if (params.success && typeof params.success === 'function') {
+        params.success(response.data);
+      }
+      return response.data;
+    }).catch(error => {
+
+      //判断params.error 是否存在，存在则执行
+      if (params.error && typeof params.error === 'function') {
+        params.error(error);
+      }
+
       throw error;
     });
 };
 
 // 封装 POST 请求
-export const post = (url, data = {}) => {
-  return axiosInstance.post(url, data)
-    .then(response => response.data)
+export const post = (url, params = {}) => {
+  console.log(params.data)
+  return axiosInstance.post(url, params.data)
+    .then(response => {
+      if (params.success && typeof params.success === 'function') {
+        params.success(response.data);
+      }
+      return response.data;
+    })
     .catch(error => {
+
+      if (params.error && typeof params.error === 'function') {
+        params.error(error);
+      }
       throw error;
     });
 };

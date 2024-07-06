@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "mock": "node src/mock_server.js",
+    "dev_mock": "concurrently \"npm run dev\" \"npm run mock\""
   },
   "dependencies": {
     "@ckeditor/ckeditor5-image": "^42.0.0",
@@ -32,8 +34,12 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
+    "concurrently": "^8.2.2",
     "cssnano": "^7.0.3",
     "daisyui": "^4.12.2",
+    "express": "^4.19.2",
+    "mockjs": "^1.1.0",
+    "mysql2": "^3.10.2",
     "postcss": "^8.4.38",
     "rollup-plugin-visualizer": "^5.12.0",
     "terser": "^5.31.1",

@@ -60,4 +60,29 @@ terserOptions: {
 
 ```
 
+## mock
+
+### axiosMock
+```javascript
+
+# .evn
+USE_AXIOS_MOCK=true
+MOCK_SERVER=false
+
+```
+
+#### 相关配置文件
+1. src/axiosMock.js
+
+
+### 服务
+```
+# .evn
+USE_AXIOS_MOCK=false
+MOCK_SERVER=true
+```
+
+#### 相关配置文件
+1. src/mock_server.js
+2. src/mock/router.js 路由配置
 
