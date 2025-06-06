@@ -2,7 +2,12 @@ import { get } from './axios';
 
 const PERMISSIONS_KEY = 'user_permissions';
 
+import permissionsJson from './permissions.json'
+
 export const getUserPermissions = async () => {
+
+  return permissionsJson;
+
   let permissions = JSON.parse(sessionStorage.getItem(PERMISSIONS_KEY));
 
   if (!permissions) {

@@ -1,6 +1,13 @@
 import { get } from './axios';
 
+
+import routes from './routes.json';
+
 export const fetchRoutes = () => {
+
+
+  return routes
+
   return get('/api/routes')
     .then(data => {
       console.log('Fetched routes:', data); // 调试信息

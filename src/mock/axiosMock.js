@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import axiosInstance from '../api/axios';
-import routes from './routes.json';
-import permissions from './permission.json';
+import routes from './data/routes.json';
+import permissions from './data/permissions.json';
 import Cookies from 'js-cookie';
 
 export const setupMock = () => {

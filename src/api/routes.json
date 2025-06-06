@@ -1,0 +1,87 @@
+[
+    {
+      "path": "/",
+      "component": "MainLayout",
+      "children": [
+        {
+          "path": "/",
+          "name": "dashboard",
+          "component": "Dashboard",
+          "meta": { "title": "控制台", "icon": "chart-bar" }
+        },
+        {
+          "path": "dashboard",
+          "name": "zicaidan",
+          "component": "Dashboard",
+          "meta": { "title": "子菜单", "icon": "chart-bar" }
+        },
+        {
+          "path": "subpage1",
+          "name": "subpage1",
+          "component": "SubPage1",
+          "meta": { "title": "SubPage 1", "parent": "zicaidan" }
+        },
+        {
+          "path": "subpage2",
+          "name": "subpage2",
+          "component": "SubPage2",
+          "meta": { "title": "SubPage 2", "parent": "zicaidan" }
+        },
+        {
+          "path": "subpage3",
+          "name": "subpage3",
+          "component": "SubPage3",
+          "meta": { "title": "SubPage 3", "parent": "subpage2", "display":"none" }
+        },
+        {
+          "path": "page1",
+          "name": "page1",
+          "component": "Page1",
+          "meta": { "title": "Page 1", "icon": "user" }
+        },
+        {
+          "path": "page2",
+          "name": "page2",
+          "component": "Page2",
+          "meta": { "title": "Page 2", "icon": "cogs" }
+        },
+        {
+          "path": "test",
+          "name": "test",
+          "component": "Test",
+          "meta": { "title": "Test", "icon": "user" }
+        },
+        {
+          "path": "protected",
+          "name": "protected",
+          "component": "Protected",
+          "meta": { "title": "Protected", "icon": "user" }
+        },
+        {
+          "path": "table",
+          "name": "table",
+          "component": "Table",
+          "meta": { "title": "表格", "icon": "user" }
+        },
+        {
+          "path": "form",
+          "name": "form",
+          "component": "FormPage",
+          "meta": { "title": "表单", "icon": "user"}
+        },
+        {
+          "path": "ParentComponent",
+          "name": "ParentComponent",
+          "component": "ParentComponent",
+          "meta": { "title": "ParentComponent", "icon": "user"}
+        }
+      ]
+    },
+    {
+      "path": "/login",
+      "name": "login",
+      "component": "Login",
+      "meta": { "title": "Login", "public": true}
+    }
+  ]
+  

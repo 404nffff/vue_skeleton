@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
   const useMock = mode === 'development' && process.env.MOCK_SERVER === 'true';
 
   return {
-    base: '/dist/', // 确保正确设置公共路径
+    base: '/', // 确保正确设置公共路径
     plugins: [
       visualizer({open: false}),
       vue(),
@@ -105,7 +105,7 @@ export default defineConfig(({ mode }) => {
       host:'0.0.0.0',
       proxy: {
         '/api': {
-          target: useMock ? 'http://localhost:3000' : 'http://your-api-server.com',
+          target: process.env.API_HOST,
           changeOrigin: true
         },
       },

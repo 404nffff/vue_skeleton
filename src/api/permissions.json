@@ -1,0 +1,10 @@
+
+  [
+    "/api/routes",
+    "/api/login",
+    "/api/room/list",
+    "/api/room/create",
+    "/api/room/join",
+    "/api/room/leave",
+    "/api/room/msg_list"
+  ]
